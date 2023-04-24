@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mb-4">Наши продукты</h1>
+    <a href="{% url 'add_restaurant' %}" class="btn btn-primary btn-lg mb-4">Создать ресторан</a>
+
+    <form method="get" class="mb-4">
+        <select name="restaurant" class="form-select form-select-lg mb-3">
+            <option value="">Все рестораны</option>
+            {% for restaurant in restaurants %}
+                <option value="{{ restaurant.name }}" {% if restaurant_filter == restaurant.name %}selected{% endif %}>{{ restaurant.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-secondary btn-lg">Поиск</button>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for product in products %}
+        <div class="col mb-4">
+            <div class="card h-100">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+                {% else %}
+                <img src="https://www.clickbank.com/wp-content/uploads/2021/11/Sell-Your-Product.png" class="card-img-top" alt="...">
+
+                {% endif%}
+                <div class="card-body">
+                    <h5 class="card-title">Название: {{ product.name }}</h5>
+                    <p class="card-text">Описание: {{ product.description }}</p>
+                    <p class="card-text"><small class="text-muted">Цена: {{ product.price }}тг</small></p>
+                </div>
+                <form action="{% url 'delete_product' product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col">
+            <p>No products found.</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

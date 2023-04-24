@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mb-4">Наш персонал</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for staff_member in staff %}
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        {% if staff_member.image %}
+                        <img src="{{ staff_member.image.url }}" class="card-img-top" style="width: 200px; height:200px" alt="...">
+                        {% else %}
+                        <img src="https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" class="card-img-top" alt="...">
+        
+                        {% endif%}
+                        <h5 class="card-title">{{ staff_member.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ staff_member.position }}</h6>
+                        <p class="card-text">{{ staff_member.phone }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <p class="text-center mt-4">Благодарим Вас за выбор нашей продукции. Мы надеемся, что вам они понравятся так же, как нам нравится создавать их для вас!</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Список заведений</h1>
+  <ul>
+    {% for restaurant in restaurants %}
+      <li>
+        <a href="{% url 'restaurant_detail' restaurant.pk %}">{{ restaurant.name }}</a>
+        <p>{{ restaurant.description }}</p>
+        <p>Владелец: {{ restaurant.user }}</p>
+        <hr>
+        <form action="{% url 'delete_restaurant' restaurant.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Удалить</button>
+      </form>
+      </li>
+    {% empty %}
+      <li>No restaurants yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
